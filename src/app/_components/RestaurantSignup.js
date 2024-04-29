@@ -34,7 +34,7 @@ const RestaurantSignUp = () => {
         body: JSON.stringify({ email, password, name, city, address, contact }),
       });
       response = await response.json();
-      console.log(response);
+
       if (response.success) {
         const { result } = response;
         delete result.password;
@@ -44,7 +44,6 @@ const RestaurantSignUp = () => {
         message.error('Signup failed!!');
       }
     } catch (error) {
-      console.error('Error:', error);
       message.error('Something went wrong, please try again later.');
     }
   };

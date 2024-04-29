@@ -1,12 +1,12 @@
-import { Input, Button, message } from 'antd';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { Input, Button, message } from "antd";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const { Password } = Input;
 
 const RestaurantLogin = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const router = useRouter();
 
@@ -18,8 +18,8 @@ const RestaurantLogin = () => {
       setError(false);
     }
     try {
-      let response = await fetch('http://localhost:3000/api/restaurant', {
-        method: 'POST',
+      let response = await fetch("http://localhost:3000/api/restaurant", {
+        method: "POST",
         body: JSON.stringify({ email, password, login: true }),
       });
       response = await response.json();
@@ -27,14 +27,13 @@ const RestaurantLogin = () => {
       if (response.success) {
         const { result } = response;
         delete result.password;
-        localStorage.setItem('restaurantUser', JSON.stringify(result));
-        router.push('/restaurant/dashboard');
+        localStorage.setItem("restaurantUser", JSON.stringify(result));
+        router.push("/restaurant/dashboard");
       } else {
-        message.error('Login failed!!');
+        message.error("Login failed!!");
       }
     } catch (error) {
-      console.error('Error:', error);
-      message.error('Something went wrong, please try again later.');
+      message.error("Something went wrong, please try again later.");
     }
   };
 

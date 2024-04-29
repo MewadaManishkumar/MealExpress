@@ -3,6 +3,7 @@ import { restaurantSchema } from "@/app/lib/restaurantsModel";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
+//Get api route to get all the restaurants in the database
 export async function GET() {
   await mongoose.connect(connectionStr);
   const data = await restaurantSchema.find();
@@ -10,6 +11,7 @@ export async function GET() {
   return NextResponse.json({ result: data });
 }
 
+//Post api route to add a new restaurant to the database
 export async function POST(request) {
     let payload = await request.json();
     let result;

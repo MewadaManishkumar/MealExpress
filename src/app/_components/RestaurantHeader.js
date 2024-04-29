@@ -3,7 +3,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Layout, Menu, Button, Row, Col, Image } from "antd";
 import Link from "next/link";
-import { LogoutOutlined } from "@ant-design/icons";
+import { LogoutOutlined, HomeOutlined, UserOutlined } from "@ant-design/icons";
 
 const { Header } = Layout;
 
@@ -48,9 +48,8 @@ const RestaurantHeader = () => {
       <div className="logo">
         <Image
           preview={false}
-          width={140}
-          height={100}
-          src="https://play-lh.googleusercontent.com/jsFZuEV1mG6wiBvJ5iNGZqm1vmSKL6-tLK-YtKzd-f7D7KeHGNar1XQUh2ZlKI57kw"
+          width={120}
+          src="https://i.ibb.co/FJLb1jv/Meal-Express.png"
           alt="Logo"
         />
       </div>
@@ -59,23 +58,28 @@ const RestaurantHeader = () => {
         style={{
           lineHeight: "80px",
           display: "flex",
-          alignItems: "-moz-initial",
+          alignItems: "center",
         }}
         items={[
           {
             key: "home",
             label: <Link href="/">Home</Link>,
+            icon: <HomeOutlined />,
+            style: { width: "100px" },
           },
           ...(details && details.name
             ? [
                 {
                   key: "profile",
                   label: <Link href="/">Profile</Link>,
+                  icon: <UserOutlined />,
+                  style: { width: "100px" },
                 },
                 {
                   key: "logout",
                   label: <Link href="/restaurant">Logout</Link>,
                   icon: <LogoutOutlined />,
+                  style: { width: "100px" },
                   onClick: logout,
                 },
               ]
@@ -83,6 +87,8 @@ const RestaurantHeader = () => {
                 {
                   key: "login",
                   label: <Link href="/">Login/SignUp</Link>,
+                  icon: <UserOutlined />,
+                  style: { width: "100px" },
                 },
               ]),
         ]}

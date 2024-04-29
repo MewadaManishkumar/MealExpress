@@ -1,42 +1,250 @@
-.input-wrapper{
+/*header css */
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.header-wrapper ul {
+  display: flex;
+}
+
+.header-wrapper ul li {
+  list-style-type: none;
+  padding: 5px;
+}
+.header-wrapper ul li a {
+  text-decoration: none;
+}
+
+.header-wrapper ul li button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: blueviolet;
+  font-size: 16px;
+}
+
+.footer-wrapper {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 10px;
+  background-color: #fff;
+}
+
+.input-wrapper {
   margin: 10px;
-  }
-  .input-field{
-    width: 400px;
-    height: 40px;
-  }
-  
-  .antd-button{
-    margin: 10px;
-    width: 150px;
-    height: 40px;
-  }
-  .button{
-    width: 200px;
-    height: 30px;
-  }
-  .container{
-    text-align: center;
-  }
-  .button-link{
-    border: 0;
-    cursor: pointer;
-    background-color: transparent;
-    color: rgb(36, 83, 237);
-    margin: 20px;
-  }
+}
+.input-field {
+  width: 400px;
+  height: 40px;
+}
+
+.antd-button {
+  margin: 10px;
+  width: 150px;
+  height: 40px;
+}
+.button {
+  width: 200px;
+  height: 30px;
+}
+.container {
+  text-align: center;
+}
+.button-link {
+  border: 0;
+  cursor: pointer;
+  background-color: transparent;
+  color: rgb(36, 83, 237);
+  margin: 20px;
+}
 
 .add-food-item-container {
-    display: flex;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh; /* Adjust height as needed */
+}
+
+.input-error {
+  position: absolute;
+  padding: 8px;
+  color: red;
+  font-size: 13px;
+}
+
+.main-page-banner, .restaurant-page-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url("https://a.storyblok.com/f/88809/1150x450/30a9c4f9a6/igevia_header_fastfood01_450.jpg");
+  height: 230px;
+  text-align: center;
+  padding: 30px;
+  margin-top: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  background-blend-mode: multiply;
+  color: #fff;
+}
+
+.main-page-banner .input-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 60%;
+  margin: auto;
+}
+
+.main-page-banner .select-input {
+  height: 40px;
+  border: none;
+  padding-left: 15px;
+  margin-right: 25px;
+  width: 35%;
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 4px 11px;
+  transition: all 0.3s;
+
+  &:hover,
+  &:focus {
+    border-color: #40a9ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  }
+}
+
+.ant-dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.main-page-banner .search-input {
+  height: 40px;
+  border: none;
+  padding-left: 15px;
+  border-left: 1px solid #ccc;
+  width: 55%;
+  cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 4px 11px;
+  transition: all 0.3s;
+
+  &:hover,
+  &:focus {
+    border-color: #40a9ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  }
+}
+/*media queries for selct and search input on home page*/
+@media (max-width: 768px) {
+  .main-page-banner .input-wrapper {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 70vh; /* Adjust height as needed */
+    align-items: stretch;
   }
 
-  .input-error{
-    position: absolute;
-    padding: 8px;
-    color: red;
-    font-size: 13px;
+  .main-page-banner .select-input,
+  .main-page-banner .search-input {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
+
+.location-list {
+  color: #000;
+  list-style-type: none;
+  text-align: left;
+  position: absolute;
+  background-color: #fff;
+  padding: 0;
+  margin: 0;
+  margin-left: -5px;
+  border: 1px solid #ccc;
+}
+.location-list li {
+  width: 180px;
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+.restaurant-list-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  margin-bottom: 50px;
+}
+.restaurant-wrapper {
+  width: 45%;
+  background-color: orange;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.restaurant-wrapper .heading-wrapper,
+.restaurant-wrapper .address-wrapper {
+  padding-left: 15px;
+  display: flex;
+  justify-content: flex-start;
+}
+.restaurant-wrapper h5 {
+  margin-left: 15px;
+}
+.restaurant-wrapper .address {
+  margin-left: 5px;
+}
+.restaurant-page-banner h1 {
+  font-size: 65px;
+}
+.details-wrapper {
+  display: flex;
+  background-color: orange;
+}
+.details-wrapper h4 {
+  width: 50%;
+}
+
+.food-list-wrapper {
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.food-list-wrapper .list-item {
+  color: orange;
+  font-weight: bold;
+  border-bottom: 1px solid;
+  padding: 20px;
+  display: flex;
+  text-transform: capitalize;
+}
+.food-list-wrapper .list-item .description {
+  font-weight: lighter;
+}
+.food-list-wrapper .list-item button {
+  color: #fff;
+  background-color: orange;
+  border: 0;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 5px;
+  border-radius: 5px;
+}
+.food-list-wrapper .list-item img {
+  width: 100px;
+  padding-right: 20px;
 }

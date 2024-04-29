@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Input, Button, message } from "antd";
 
-const AddFoodItem = () => {
+const AddFoodItem = (props) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [imagePath, setImagePath] = useState("");
@@ -33,9 +33,10 @@ const AddFoodItem = () => {
         resto_id,
       }),
     });
-
+    
     response = await response.json();
     if (response.success) {
+      props.setAddItem(false);
       message.success("Food item added successfully!");
     } else{
       message.error("Food item not added ");
