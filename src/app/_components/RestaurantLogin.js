@@ -1,6 +1,7 @@
 import { Input, Button, message } from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { baseUrl } from "../Utils";
 
 const { Password } = Input;
 
@@ -18,7 +19,7 @@ const RestaurantLogin = () => {
       setError(false);
     }
     try {
-      let response = await fetch("http://localhost:3000/api/restaurant", {
+      let response = await fetch(`${baseUrl}api/restaurant`, {
         method: "POST",
         body: JSON.stringify({ email, password, login: true }),
       });

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Input, Button, message } from "antd";
+import { baseUrl } from "../Utils";
 
 const AddFoodItem = (props) => {
   const [name, setName] = useState("");
@@ -23,7 +24,7 @@ const AddFoodItem = (props) => {
     if (restaurantData) {
       resto_id = restaurantData._id;
     }
-    let response = await fetch("http://localhost:3000/api/restaurant/foods", {
+    let response = await fetch(`${baseUrl}api/restaurant/foods`, {
       method: "POST",
       body: JSON.stringify({
         name,

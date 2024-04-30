@@ -5,6 +5,7 @@ import { Input, Typography, Dropdown, Menu } from "antd";
 import CustomerHeader from "./_components/CustomerHeader";
 import Footer from "./_components/Footer";
 import { CloseCircleOutlined } from '@ant-design/icons';
+import { baseUrl } from "./Utils";
 
 export default function Home() {
   const [locations, setLocations] = useState([]);
@@ -20,7 +21,7 @@ export default function Home() {
 
   const loadLocations = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/customer/locations");
+      const response = await fetch(`${baseUrl}api/customer/locations`);
       const data = await response.json();
       if (data.success) {
         setLocations(data.result);
@@ -31,7 +32,7 @@ export default function Home() {
   };
 
   const loadRestaurants = async (params) => {
-    let url = "http://localhost:3000/api/customer";
+    let url = `${baseUrl}api/customer`;
     if (params?.location) {
       url += `?location=${params.location}`;
     } else if (params?.restaurant) {

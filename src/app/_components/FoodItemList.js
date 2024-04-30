@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Image, Table, message } from "antd";
 import { useRouter } from "next/navigation";
+import { baseUrl } from "../Utils";
 
 const FoodItemList = () => {
   const [foodData, setFoodData] = useState();
@@ -63,7 +64,7 @@ const FoodItemList = () => {
   const fetchFoodData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/restaurant/foods/${resto_id}`
+        `${baseUrl}api/restaurant/foods/${resto_id}`
       );
       const responseData = await response.json();
       setFoodData(responseData?.data);
@@ -78,7 +79,7 @@ const FoodItemList = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/restaurant/foods/${id}`, {
+      const response = await fetch(`${baseUrl}api/restaurant/foods/${id}`, {
         method: "DELETE",
       });
       const data = await response.json();

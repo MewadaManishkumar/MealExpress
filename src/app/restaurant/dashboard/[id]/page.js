@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Input, Button, message } from "antd";
 import { useRouter } from "next/navigation";
 import { RollbackOutlined } from "@ant-design/icons";
+import { baseUrl } from "@/app/Utils";
 
 const EditFoodItem = (props) => {
   const [name, setName] = useState("");
@@ -20,7 +21,7 @@ const EditFoodItem = (props) => {
   const fetchFoodItem = async () => {
     try {
       let response = await fetch(
-        `http://localhost:3000/api/restaurant/foods/edit/${props.params.id}`
+        `${baseUrl}api/restaurant/foods/edit/${props.params.id}`
       );
       response = await response.json();
       // Set the food item state
@@ -44,7 +45,7 @@ const EditFoodItem = (props) => {
     }
     try {
       let response = await fetch(
-        `http://localhost:3000/api/restaurant/foods/edit/${props.params.id}`,
+        `${baseUrl}api/restaurant/foods/edit/${props.params.id}`,
         {
           method: "PUT",
           body: JSON.stringify({ name, price, imagePath, description }),

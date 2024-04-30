@@ -1,0 +1,1 @@
+export const baseUrl = 'https://meal-express-gold.vercel.app/'
