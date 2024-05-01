@@ -76,7 +76,8 @@
   font-size: 13px;
 }
 
-.main-page-banner, .restaurant-page-banner {
+.main-page-banner,
+.restaurant-page-banner {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -196,7 +197,12 @@
   border-radius: 5px;
   cursor: pointer;
 }
-.restaurant-wrapper .heading-wrapper,
+.restaurant-wrapper .heading-wrapper {
+  padding-left: 15px;
+  display: flex;
+  justify-content:space-between ;
+  align-items: center;
+}
 .restaurant-wrapper .address-wrapper {
   padding-left: 15px;
   display: flex;

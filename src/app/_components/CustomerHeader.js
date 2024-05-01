@@ -1,3 +1,5 @@
+'use client'
+
 import { Layout, Menu, Image } from "antd";
 import {
   HomeOutlined,
