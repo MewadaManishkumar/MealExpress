@@ -1,5 +1,3 @@
-'use client'
-
 import { Layout, Menu, Image } from "antd";
 import {
   HomeOutlined,
@@ -7,10 +5,56 @@ import {
   ShoppingCartOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const { Header } = Layout;
 
-const CustomerHeader = () => {
+const CustomerHeader = (props) => {
+  const isLocalStorageAvailable = typeof localStorage !== 'undefined';
+  const cartStorage = isLocalStorageAvailable ? localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")) : null;
+  const [cartNumber, setCartNumber] = useState(cartStorage?.length || 0);
+  const [cartItem, setCartItem] = useState(cartStorage || []);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (props.cartData && isLocalStorageAvailable) {
+      if (cartNumber) {
+        if (cartItem[0]?.resto_id !== props.cartData.resto_id) {
+          localStorage.removeItem("cart");
+          setCartNumber(1);
+          setCartItem([props.cartData]);
+          localStorage.setItem("cart", JSON.stringify([props.cartData]));
+        } else {
+          let localCartItem = [...cartItem];
+          localCartItem.push(JSON.parse(JSON.stringify(props.cartData)));
+          setCartItem(localCartItem);
+          setCartNumber(cartNumber + 1);
+          localStorage.setItem("cart", JSON.stringify(localCartItem));
+        }
+      } else {
+        setCartNumber(1);
+        setCartItem([props.cartData]);
+        localStorage.setItem("cart", JSON.stringify([props.cartData]));
+      }
+    }
+  }, [props.cartData, isLocalStorageAvailable]);
+
+  useEffect(() => {
+    if (props.removeCartData && isLocalStorageAvailable) {
+      let localCartItem = cartItem.filter((item) => {
+        return item._id !== props.removeCartData;
+      });
+      setCartItem(localCartItem);
+      setCartNumber(cartNumber - 1);
+      localStorage.setItem("cart", JSON.stringify(localCartItem));
+      if (localCartItem.length === 0) {
+        localStorage.removeItem("cart");
+      }
+    }
+  }, [props.removeCartData, isLocalStorageAvailable]);
+
   return (
     <Header
       style={{
@@ -24,7 +68,7 @@ const CustomerHeader = () => {
         <Image
           preview={false}
           width={120}
-          src="https://i.ibb.co/FJLb1jv/Meal-Express.png"
+          src="https://i.ibb.co/MBLy2M8/Meal-Express.png"
           alt="Logo"
         />
       </div>
@@ -39,7 +83,14 @@ const CustomerHeader = () => {
           {
             key: "home",
             icon: <HomeOutlined />,
-            label: "Home",
+            label:(
+              <Link
+                href='/'
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Home
+              </Link>
+            ),
             style: { width: "100px" },
           },
           {
@@ -57,7 +108,14 @@ const CustomerHeader = () => {
           {
             key: "cart",
             icon: <ShoppingCartOutlined />,
-            label: "Cart(0)",
+            label: (
+              <Link
+                href={cartNumber ? "/cart" : "#"}
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Cart({cartNumber ? cartNumber : 0})
+              </Link>
+            ),
             style: { width: "100px" },
           },
           {

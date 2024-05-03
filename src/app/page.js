@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Input, Typography, Dropdown, Menu } from "antd";
+import { Input, Typography, Dropdown, Menu, Spin } from "antd";
 import CustomerHeader from "./_components/CustomerHeader";
 import Footer from "./_components/Footer";
 import { CloseCircleOutlined } from '@ant-design/icons';
@@ -12,6 +12,7 @@ export default function Home() {
   const [restaurants, setRestaurants] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [showLocation, setShowLocation] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -32,6 +33,7 @@ export default function Home() {
   };
 
   const loadRestaurants = async (params) => {
+    setLoading(true);
     let url = `${baseUrl}api/customer`;
     if (params?.location) {
       url += `?location=${params.location}`;
@@ -42,10 +44,14 @@ export default function Home() {
       const response = await fetch(url);
       const data = await response.json();
       if (data?.success) {
-        setRestaurants(data.result);
+        setRestaurants(data.result || []);
+      } else {
+        console.error("Error loading restaurants:", data.error);
       }
     } catch (error) {
       console.error("Error loading restaurants:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,10 +62,10 @@ export default function Home() {
   };
 
   const handleClearSelection = () => {
-    setSelectedLocation(""); // Clear the selected location
-    loadRestaurants(); // Reload all data
+    setSelectedLocation("");
+    loadRestaurants();
   };
-  // Menu for locations dropdown
+
   const menu = (
     <Menu>
       {locations.map((location) => (
@@ -100,24 +106,32 @@ export default function Home() {
         </div>
       </div>
       <div className="restaurant-list-container">
-        {restaurants.map((item) => (
-          <div
-            key={item._id}
-            onClick={() => router.push(`explore/${item.name}?id=${item._id}`)}
-            className="restaurant-wrapper"
-          >
-            <div className="heading-wrapper">
-              <Typography.Title level={3}>{item.name}</Typography.Title>
-              <Typography.Text>Contact: {item.contact}</Typography.Text>
-            </div>
-            <div className="address-wrapper">
-              <div>{item.city},</div>
-              <div className="address">
-                {item.address}, Email: {item.email}
+        {loading ? (
+          <div style={{ textAlign: "center" }}>
+            <Spin size="large" />
+          </div>
+        ) : restaurants.length > 0 ? (
+          restaurants.map((item) => (
+            <div
+              key={item._id}
+              onClick={() => router.push(`explore/${item.name}?id=${item._id}`)}
+              className="restaurant-wrapper"
+            >
+              <div className="heading-wrapper">
+                <Typography.Title level={3}>{item.name}</Typography.Title>
+                <Typography.Text>Contact: {item.contact}</Typography.Text>
+              </div>
+              <div className="address-wrapper">
+                <div>{item.city},</div>
+                <div className="address">
+                  {item.address}, Email: {item.email}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <div>No restaurants found</div>
+        )}
       </div>
       <Footer />
     </main>

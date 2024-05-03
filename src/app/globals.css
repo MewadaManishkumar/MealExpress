@@ -1,5 +1,4 @@
 /*header css */
-
 .header-wrapper {
   display: flex;
   justify-content: space-between;
@@ -149,7 +148,8 @@
     box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
   }
 }
-/*media queries for selct and search input on home page*/
+
+/* Media queries for select and search input on home page */
 @media (max-width: 768px) {
   .main-page-banner .input-wrapper {
     flex-direction: column;
@@ -189,7 +189,7 @@
   margin-bottom: 50px;
 }
 .restaurant-wrapper {
-  width: 45%;
+  width: 47%;
   background-color: orange;
   margin: 10px;
   padding: 10px;
@@ -200,7 +200,7 @@
 .restaurant-wrapper .heading-wrapper {
   padding-left: 15px;
   display: flex;
-  justify-content:space-between ;
+  justify-content: space-between;
   align-items: center;
 }
 .restaurant-wrapper .address-wrapper {
@@ -253,4 +253,257 @@
 .food-list-wrapper .list-item img {
   width: 100px;
   padding-right: 20px;
+}
+
+.list-item-block-1 {
+  width: 20%;
+}
+.list-item-block-2 {
+  width: 60%;
+}
+.list-item-block-3 {
+  width: 20%;
+}
+
+.total-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid orange;
+  padding-bottom: 20px;
+}
+.total-wrapper .row {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 20%;
+  margin-right: 20%;
+  color: orange;
+  font-size: 20px;
+  font-weight: bold;
+}
+.total-wrapper .block-1 {
+  width: 70%;
+}
+.total-wrapper .block-2 {
+  width: 30%;
+}
+.total-wrapper .block-2 button {
+  padding: 10px 25px;
+  border: navajowhite;
+  background-color: orange;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 1024px) {
+  .restaurant-wrapper {
+    width: 45%;
+  }
+}
+/* For tablets and smaller screens */
+@media (max-width: 768px) {
+  .header-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .header-wrapper ul {
+    margin-top: 10px;
+  }
+
+  .header-wrapper ul li {
+    padding: 3px;
+  }
+
+  .main-page-banner {
+    height: auto;
+    padding: 20px;
+  }
+
+  .main-page-banner .input-wrapper {
+    width: 90%;
+  }
+
+  .main-page-banner .select-input,
+  .main-page-banner .search-input {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .restaurant-list-container {
+    flex-direction: column;
+  }
+
+  .restaurant-wrapper {
+    width: 95%;
+  }
+
+  .food-list-wrapper .list-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .list-item-block-1,
+  .list-item-block-2,
+  .list-item-block-3 {
+    width: 100%;
+  }
+
+  .list-item-block-2 {
+    margin: 10px 0;
+  }
+
+  .total-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .total-wrapper .row {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .total-wrapper .block-2 {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+  }
+
+  .total-wrapper .row span:first-child {
+    text-align: left;
+  }
+
+  .total-wrapper .row span:last-child {
+    justify-self: end;
+  }
+}
+
+/* For mobile screens */
+@media (max-width: 425px) {
+  .restaurant-page-banner {
+    margin-right: 20px; /* Add this line to reduce the gap on the right */
+  }
+
+  .food-list-wrapper .list-item {
+    margin-right: 20px; /* Add this line to reduce the gap on the right */
+  }
+
+  .total-wrapper .row {
+    margin-left: 10%;
+    margin-right: 10%; /* Adjust the margin-right to reduce the gap */
+  }
+}
+
+@media (max-width: 375px) {
+  .restaurant-page-banner {
+    margin-right: 15px; /* Adjust the margin-right to reduce the gap */
+  }
+
+  .food-list-wrapper .list-item {
+    margin-right: 15px; /* Adjust the margin-right to reduce the gap */
+  }
+
+  .total-wrapper .row {
+    margin-left: 5%;
+    margin-right: 5%; /* Adjust the margin-right to reduce the gap */
+  }
+}
+
+@media (max-width: 320px) {
+  .header-wrapper ul li {
+    padding: 2px;
+  }
+
+  .header-wrapper ul li button {
+    font-size: 14px;
+  }
+
+  .input-field {
+    width: 280px;
+  }
+
+  .antd-button {
+    width: 120px;
+    height: 35px;
+  }
+
+  .button {
+    width: 180px;
+    height: 25px;
+  }
+
+  .main-page-banner {
+    padding: 15px;
+    width: 220%;
+  }
+
+  .main-page-banner .input-wrapper {
+    width: 95%;
+  }
+
+  .main-page-banner .select-input,
+  .main-page-banner .search-input {
+    font-size: 14px;
+  }
+
+  .restaurant-wrapper {
+    margin: 5px 0;
+    width: 220%;
+  }
+
+  .restaurant-wrapper .heading-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .restaurant-wrapper h5 {
+    margin-left: 0;
+  }
+
+  .food-list-wrapper .list-item img {
+    width: 80px;
+    padding-right: 10px;
+  }
+
+  .restaurant-page-banner {
+    margin-right: 10px;
+    width: 210%;
+  }
+
+  .food-list-wrapper .list-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 220%;
+  }
+  .total-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 230%;
+  }
+  .total-wrapper .row {
+    font-size: 16px;
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+
+  .details-wrapper {
+    display: flex;
+    background-color: orange;
+    width: 230%;
+    margin-top: 7px;
+    flex-wrap: wrap;
+  }
 }
