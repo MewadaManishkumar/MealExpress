@@ -1,4 +1,5 @@
-"use client";
+'use client'
+
 import React, { useState, useEffect } from "react";
 import CustomerHeader from "../_components/CustomerHeader";
 import Footer from "../_components/Footer";
@@ -9,44 +10,33 @@ const Page = () => {
   const router = useRouter();
   const [removeCartData, setRemoveCartData] = useState();
   const [cartData, setCartData] = useState();
-  const [cartStorage, setCartStorage] = useState(JSON.parse(localStorage?.getItem("cart")));
-  const [cartIds, setCartIds] = useState(
-    cartStorage
-      ? () =>
-          cartStorage.map((cartItem) => {
-            return cartItem._id;
-          })
-      : []
-  );
-  const [total, setTotal] = useState(() => {
-    if (cartStorage?.length > 0) {
-      return cartStorage.reduce((acc, item) => acc + item.price, 0);
-    } else {
-      return 0;
+  const [cartStorage, setCartStorage] = useState();
+  const [cartIds, setCartIds] = useState([]);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const localCart = JSON.parse(localStorage.getItem("cart")) || [];
+      setCartStorage(localCart);
+      setCartIds(localCart.map(cartItem => cartItem._id));
+      setTotal(localCart.reduce((acc, item) => acc + item.price, 0));
     }
-  });
+  }, []);
 
   const removeFromCart = (id) => {
     setRemoveCartData(id);
-    let localIds = cartIds.filter((item) => item !== id);
-    setCartIds(localIds);
-    setCartData();
-
     const updatedCart = cartStorage.filter((item) => item._id !== id);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    }
     setCartStorage(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-
-    // Update the total amount
-    const newTotal =
-      updatedCart.length === 1
-        ? updatedCart[0].price
-        : updatedCart.reduce((a, b) => a.price + b.price, 0);
+    setCartIds(updatedCart.map(cartItem => cartItem._id));
+    const newTotal = updatedCart.reduce((acc, item) => acc + item.price, 0);
     setTotal(newTotal);
   };
 
   useEffect(() => {
     if (cartStorage?.length === 0) {
-      // Redirect to home page if cart is empty
       router.push("/");
     }
   }, [cartStorage, router]);

@@ -13,7 +13,7 @@ const { Header } = Layout;
 
 const CustomerHeader = (props) => {
   const isLocalStorageAvailable = typeof localStorage !== 'undefined';
-  const cartStorage = isLocalStorageAvailable ? localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")) : null;
+  const cartStorage = isLocalStorageAvailable ? JSON.parse(localStorage.getItem("cart")) : null;  
   const [cartNumber, setCartNumber] = useState(cartStorage?.length || 0);
   const [cartItem, setCartItem] = useState(cartStorage || []);
   const router = useRouter();

@@ -1,4 +1,5 @@
-"use client";
+'use client'
+
 import { useEffect, useState } from "react";
 import CustomerHeader from "../../_components/CustomerHeader";
 import { baseUrl } from "@/app/Utils";
@@ -9,37 +10,36 @@ const Page = (props) => {
   const [restaurantDetails, setRestaurantDetails] = useState();
   const [foodItems, setFoodItems] = useState([]);
   const [cartData, setCartData] = useState();
-  const [cartStorage, setCartStorage] = useState(
-    JSON.parse(localStorage.getItem("cart"))
-  );
-  const [cartIds, setCartIds] = useState(
-    cartStorage
-      ? () =>
-          cartStorage.map((cartItem) => {
-            return cartItem._id;
-          })
-      : []
-  );
-  const [removeCartData,setRemoveCartData]=useState()
+  const [cartStorage, setCartStorage] = useState([]);
+  const [cartIds, setCartIds] = useState([]);
+  const [removeCartData, setRemoveCartData] = useState();
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const localCart = JSON.parse(localStorage.getItem("cart")) || [];
+      setCartStorage(localCart);
+      setCartIds(localCart.map(cartItem => cartItem._id));
+    }
     loadRestaurantDetails();
   }, []);
 
   const addToCart = (item) => {
-    let localCartIds = cartIds;
-    localCartIds.push(item._id);
+    const localCartIds = [...cartIds, item._id];
     setCartIds(localCartIds);
     setCartData(item);
     setRemoveCartData();
   };
 
-  const removeFromCart=(id)=>{
+  const removeFromCart = (id) => {
     setRemoveCartData(id);
-    let localIds=cartIds.filter(item=>item!=id);
-    setCartData()
-    setCartIds(localIds)
-}
+    const updatedCart = cartStorage.filter((item) => item._id !== id);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    }
+    setCartStorage(updatedCart);
+    setCartIds(updatedCart.map(cartItem => cartItem._id));
+  };
+
 
   const loadRestaurantDetails = async () => {
     const id = props.searchParams.id;
