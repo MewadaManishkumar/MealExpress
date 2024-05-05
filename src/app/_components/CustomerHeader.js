@@ -1,9 +1,12 @@
-import { Layout, Menu, Image } from "antd";
+import { Layout, Menu, Image, Button } from "antd";
 import {
   HomeOutlined,
   UserOutlined,
   ShoppingCartOutlined,
   PlusOutlined,
+  LogoutOutlined,
+  LoginOutlined,
+  ProfileOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,8 +15,14 @@ import Link from "next/link";
 const { Header } = Layout;
 
 const CustomerHeader = (props) => {
-  const isLocalStorageAvailable = typeof localStorage !== 'undefined';
-  const cartStorage = isLocalStorageAvailable ? JSON.parse(localStorage.getItem("cart")) : null;  
+  const isLocalStorageAvailable = typeof localStorage !== "undefined";
+  const userStorage = isLocalStorageAvailable
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
+  const cartStorage = isLocalStorageAvailable
+    ? JSON.parse(localStorage.getItem("cart"))
+    : null;
+  const [user, setUser] = useState(userStorage ? userStorage : undefined);
   const [cartNumber, setCartNumber] = useState(cartStorage?.length || 0);
   const [cartItem, setCartItem] = useState(cartStorage || []);
   const router = useRouter();
@@ -55,6 +64,11 @@ const CustomerHeader = (props) => {
     }
   }, [props.removeCartData, isLocalStorageAvailable]);
 
+  const logout = () => {
+    localStorage.removeItem("user");
+    router.push("/user-auth");
+  };
+
   return (
     <Header
       style={{
@@ -83,26 +97,14 @@ const CustomerHeader = (props) => {
           {
             key: "home",
             icon: <HomeOutlined />,
-            label:(
+            label: (
               <Link
-                href='/'
+                href="/"
                 style={{ color: "inherit", textDecoration: "none" }}
               >
                 Home
               </Link>
             ),
-            style: { width: "100px" },
-          },
-          {
-            key: "login",
-            icon: <UserOutlined />,
-            label: "Login",
-            style: { width: "100px" },
-          },
-          {
-            key: "signup",
-            icon: <UserOutlined />,
-            label: "SignUp",
             style: { width: "100px" },
           },
           {
@@ -122,7 +124,62 @@ const CustomerHeader = (props) => {
             key: "addRestaurant",
             icon: <PlusOutlined />,
             label: "Add Restaurant",
-            style: { width: "120px" },
+            style: { width: "150px" },
+          },
+          user && {
+            key: "logout",
+            icon: <LogoutOutlined />,
+            label: (
+              <Button
+                type="text"
+                onClick={logout}
+                style={{ color: "inherit", background: "none", padding: 0 }}
+              >
+                Logout
+              </Button>
+            ),
+            style: { width: "100px" },
+          },
+          user && {
+            key: "profile",
+            icon: <ProfileOutlined />,
+            label: (
+              <Link
+                href="#"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                {user.name}
+              </Link>
+            ),
+            style: { width: "100px" },
+          },
+          !user && {
+            key: "login",
+            icon:<LoginOutlined />,
+            label: (
+              <>
+                <Link
+                  href="/user-auth"
+                  style={{ color: "inherit", textDecoration: "none" }}
+                >
+                  Login
+                </Link>
+              </>
+            ),
+            style: { width: "100px" },
+          },
+          !user && {
+            key: "signup",
+            icon:<UserOutlined />,
+            label: (
+              <Link
+                href="/user-auth"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                SignUp
+              </Link>
+            ),
+            style: { width: "100px" },
           },
         ]}
       />

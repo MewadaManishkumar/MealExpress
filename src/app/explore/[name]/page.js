@@ -1,12 +1,14 @@
 'use client'
 
 import { useEffect, useState } from "react";
+import { Spin } from "antd"; // Import Spin component from antd
 import CustomerHeader from "../../_components/CustomerHeader";
 import { baseUrl } from "@/app/Utils";
 import Footer from "@/app/_components/Footer";
 
 const Page = (props) => {
   const name = props.params.name;
+  const [loading, setLoading] = useState(true); // State to track loading state
   const [restaurantDetails, setRestaurantDetails] = useState();
   const [foodItems, setFoodItems] = useState([]);
   const [cartData, setCartData] = useState();
@@ -40,7 +42,6 @@ const Page = (props) => {
     setCartIds(updatedCart.map(cartItem => cartItem._id));
   };
 
-
   const loadRestaurantDetails = async () => {
     const id = props.searchParams.id;
     let response = await fetch(`${baseUrl}api/customer/${id}`);
@@ -48,12 +49,13 @@ const Page = (props) => {
     if (response.success) {
       setRestaurantDetails(response.details);
       setFoodItems(response.foodItems);
+      setLoading(false); // Set loading to false when data is fetched
     }
   };
 
   return (
     <div>
-      <CustomerHeader cartData={cartData}  removeCartData={removeCartData} />
+      <CustomerHeader cartData={cartData} removeCartData={removeCartData} />
       <div className="restaurant-page-banner">
         <h1>{decodeURI(name)}</h1>
       </div>
@@ -64,7 +66,9 @@ const Page = (props) => {
         <h4>Email:{restaurantDetails?.email}</h4>
       </div>
       <div className="food-list-wrapper">
-        {foodItems.length > 0 ? (
+        {loading ? ( // Check loading state
+          <Spin /> // Show loading spinner if data is still loading
+        ) : foodItems && foodItems.length > 0 ? ( // Check if foodItems is not null or undefined
           foodItems.map((item) => (
             <div className="list-item">
               <div>
