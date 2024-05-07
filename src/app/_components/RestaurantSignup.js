@@ -60,6 +60,7 @@ const RestaurantSignUp = () => {
             className="input-field"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
+            style={{border: "1px solid #595959"}}
           />
           {error && !email && <span className="input-error">Please enter a valid email </span>}
         </div>
@@ -69,6 +70,7 @@ const RestaurantSignUp = () => {
             className="input-field"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
+            style={{border: "1px solid #595959"}}
           />
           {passwordError && <span className="input-error">Password and Confirm password do not match </span>}
           {error && !password && <span className="input-error">Please enter a valid password </span>}
@@ -79,6 +81,7 @@ const RestaurantSignUp = () => {
             className="input-field"
             value={c_password}
             onChange={(event) => setC_password(event.target.value)}
+            style={{border: "1px solid #595959"}}
           />
           {passwordError && <span className="input-error">Password and Confirm password do not match </span>}
           {error && !c_password && <span className="input-error">Please enter a valid confirm password </span>}
@@ -90,6 +93,7 @@ const RestaurantSignUp = () => {
             className="input-field"
             value={name}
             onChange={(event) => setName(event.target.value)}
+            style={{border: "1px solid #595959"}}
           />
           {error && !name && <span className="input-error">Please enter a valid name </span>}
         </div>
@@ -100,6 +104,7 @@ const RestaurantSignUp = () => {
             className="input-field"
             value={city}
             onChange={(event) => setCity(event.target.value)}
+            style={{border: "1px solid #595959"}}
           />
           {error && !city && <span className="input-error">Please enter a valid city </span>}
         </div>
@@ -110,6 +115,7 @@ const RestaurantSignUp = () => {
             className="input-field"
             value={address}
             onChange={(event) => setAddress(event.target.value)}
+            style={{border: "1px solid #595959"}}
           />
           {error && !address && <span className="input-error">Please enter a valid address </span>}
         </div>
@@ -120,6 +126,7 @@ const RestaurantSignUp = () => {
             className="input-field"
             value={contact}
             onChange={(event) => setContact(event.target.value)}
+            style={{border: "1px solid #595959"}}
           />
           {error && !contact && <span className="input-error">Please enter a valid contact </span>}
         </div>
