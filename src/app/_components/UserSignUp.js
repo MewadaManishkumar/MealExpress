@@ -1,6 +1,7 @@
 import { Input, Button, message } from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { baseUrl } from "../Utils";
 
 const UserSignUp = () => {
   const [name, setName] = useState("");
