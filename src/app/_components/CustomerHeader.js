@@ -1,4 +1,5 @@
-import { Layout, Menu, Image, Button } from "antd";
+"use client";
+import { Layout, Menu, Image, Button, message } from "antd";
 import {
   HomeOutlined,
   UserOutlined,
@@ -31,7 +32,7 @@ const CustomerHeader = (props) => {
     if (props.cartData && isLocalStorageAvailable) {
       if (cartNumber) {
         if (cartItem[0]?.resto_id !== props.cartData.resto_id) {
-          localStorage.removeItem("cart");
+          localStorage?.removeItem("cart");
           setCartNumber(1);
           setCartItem([props.cartData]);
           localStorage.setItem("cart", JSON.stringify([props.cartData]));
@@ -64,9 +65,26 @@ const CustomerHeader = (props) => {
     }
   }, [props.removeCartData, isLocalStorageAvailable]);
 
+  useEffect(() => {
+    if (props?.isOrderPlaced) {
+      setCartItem([]);
+      setCartNumber(0);
+      localStorage.removeItem("cart");
+      props?.setIsOrderPlaced(false);
+    }
+  }, [props?.isOrderPlaced, props?.setIsOrderPlaced]);
+
   const logout = () => {
     localStorage.removeItem("user");
     router.push("/user-auth");
+  };
+
+  const handleCartClick = () => {
+    if (cartNumber === 0) {
+      message.info("Cart is empty.");
+    } else {
+      router.push("/cart");
+    }
   };
 
   return (
@@ -82,7 +100,7 @@ const CustomerHeader = (props) => {
         <Image
           preview={false}
           width={120}
-          src="https://i.ibb.co/MBLy2M8/Meal-Express.png"
+          src="https://i.ibb.co/mFL7R3Q/Meal-Express.png"
           alt="Logo"
         />
       </div>
@@ -111,12 +129,9 @@ const CustomerHeader = (props) => {
             key: "cart",
             icon: <ShoppingCartOutlined />,
             label: (
-              <Link
-                href={cartNumber ? "/cart" : "#"}
-                style={{ color: "inherit", textDecoration: "none" }}
-              >
+              <span onClick={handleCartClick} style={{ cursor: "pointer" }}>
                 Cart({cartNumber ? cartNumber : 0})
-              </Link>
+              </span>
             ),
             style: { width: "100px" },
           },
@@ -145,7 +160,7 @@ const CustomerHeader = (props) => {
             icon: <ProfileOutlined />,
             label: (
               <Link
-                href="#"
+                href="/myprofile"
                 style={{ color: "inherit", textDecoration: "none" }}
               >
                 {user.name}
@@ -155,7 +170,7 @@ const CustomerHeader = (props) => {
           },
           !user && {
             key: "login",
-            icon:<LoginOutlined />,
+            icon: <LoginOutlined />,
             label: (
               <>
                 <Link
@@ -170,7 +185,7 @@ const CustomerHeader = (props) => {
           },
           !user && {
             key: "signup",
-            icon:<UserOutlined />,
+            icon: <UserOutlined />,
             label: (
               <Link
                 href="/user-auth"

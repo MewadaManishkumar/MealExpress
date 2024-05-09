@@ -6,6 +6,7 @@ import CustomerHeader from "./_components/CustomerHeader";
 import Footer from "./_components/Footer";
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { baseUrl } from "./Utils";
+import { debounce } from 'lodash'; // Import debounce function
 
 export default function Home() {
   const [locations, setLocations] = useState([]);
@@ -17,7 +18,7 @@ export default function Home() {
 
   useEffect(() => {
     loadLocations();
-    loadRestaurants();
+    loadRestaurants(); // Initial load of restaurants
   }, []);
 
   const loadLocations = async () => {
@@ -54,6 +55,8 @@ export default function Home() {
       setLoading(false);
     }
   };
+
+  const debouncedLoadRestaurants = debounce(loadRestaurants, 500); // Debounced version of loadRestaurants
 
   const handleListItem = (item) => {
     setSelectedLocation(item);
@@ -99,7 +102,7 @@ export default function Home() {
             className="search-input"
             onChange={(event) => {
               const searchValue = event.target.value;
-              loadRestaurants({ restaurant: searchValue });
+              debouncedLoadRestaurants({ restaurant: searchValue });
             }}
             placeholder="Enter food or restaurant name"
           />
@@ -107,7 +110,7 @@ export default function Home() {
       </div>
       <div className="restaurant-list-container">
         {loading ? (
-          <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: "center" }} >
             <Spin size="large" />
           </div>
         ) : restaurants.length > 0 ? (

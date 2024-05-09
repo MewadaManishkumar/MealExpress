@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useState, useEffect } from "react";
 import CustomerHeader from "../_components/CustomerHeader";
@@ -16,9 +16,14 @@ const Page = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const localCart = JSON.parse(localStorage.getItem("cart")) || [];
+      const localCart = JSON.parse(localStorage?.getItem("cart")) || [];
+      if (localCart?.length === 0) {
+        // If cart is empty, navigate to the root URL
+        router.push("/");
+        return;
+      }
       setCartStorage(localCart);
-      setCartIds(localCart.map(cartItem => cartItem._id));
+      setCartIds(localCart.map((cartItem) => cartItem._id));
       setTotal(localCart.reduce((acc, item) => acc + item.price, 0));
     }
   }, []);
@@ -30,71 +35,80 @@ const Page = () => {
       localStorage.setItem("cart", JSON.stringify(updatedCart));
     }
     setCartStorage(updatedCart);
-    setCartIds(updatedCart.map(cartItem => cartItem._id));
+    setCartIds(updatedCart.map((cartItem) => cartItem._id));
     const newTotal = updatedCart.reduce((acc, item) => acc + item.price, 0);
     setTotal(newTotal);
   };
 
-  useEffect(() => {
-    if (cartStorage?.length === 0) {
-      router.push("/");
+  // useEffect(() => {
+  //   if (cartStorage?.length === 0) {
+  //     router.push("/");
+  //   }
+  // }, [cartStorage, router]);
+
+  const orderNow = () => {
+    if (JSON.parse(localStorage.getItem("user"))) {
+      router.push("/order");
+    } else {
+      router.push("/user-auth?order=true");
     }
-  }, [cartStorage, router]);
-
-  return (
-    <div>
-      <CustomerHeader cartData={cartData} removeCartData={removeCartData} />
-      <div className="food-list-wrapper">
-        {cartStorage?.length > 0 ? (
-          cartStorage?.map((item) => (
-            <div className="list-item" key={item._id}>
-              <div className="list-item-block-1">
-                <img style={{ width: 100 }} src={item.image_path} />
+  };
+  if (cartStorage && cartStorage.length > 0) {
+    return (
+      <div>
+        <CustomerHeader cartData={cartData} removeCartData={removeCartData} />
+        <div className="food-list-wrapper">
+          {cartStorage?.length > 0 ? (
+            cartStorage?.map((item) => (
+              <div className="list-item" key={item._id}>
+                <div className="list-item-block-1">
+                  <img style={{ width: 100 }} src={item.image_path} />
+                </div>
+                <div className="list-item-block-2">
+                  <div>{item.name}</div>
+                  <div className="description">{item.description}</div>
+                  {cartIds?.includes(item._id) ? (
+                    <button onClick={() => removeFromCart(item._id)}>
+                      Remove From Cart
+                    </button>
+                  ) : (
+                    <button onClick={() => addToCart(item)}>Add to Cart</button>
+                  )}
+                </div>
+                <div className="list-item-block-3">Price: {item.price}</div>
               </div>
-              <div className="list-item-block-2">
-                <div>{item.name}</div>
-                <div className="description">{item.description}</div>
-                {cartIds?.includes(item._id) ? (
-                  <button onClick={() => removeFromCart(item._id)}>
-                    Remove From Cart
-                  </button>
-                ) : (
-                  <button onClick={() => addToCart(item)}>Add to Cart</button>
-                )}
-              </div>
-              <div className="list-item-block-3">Price: {item.price}</div>
+            ))
+          ) : (
+            <h1>No Food Items for this Restaurant</h1>
+          )}
+        </div>
+        <div className="total-wrapper">
+          <div className="block-1">
+            <div className="row">
+              <span>Food Charges : </span>
+              <span>{total}</span>
             </div>
-          ))
-        ) : (
-          <h1>No Food Items for this Restaurant</h1>
-        )}
-      </div>
-      <div className="total-wrapper">
-        <div className="block-1">
-          <div className="row">
-            <span>Food Charges : </span>
-            <span>{total}</span>
+            <div className="row">
+              <span>Tax : </span>
+              <span>{(total * TAX) / 100}</span>
+            </div>
+            <div className="row">
+              <span>Delivery Charges : </span>
+              <span>{DELIVERY_CHARGES}</span>
+            </div>
+            <div className="row">
+              <span>Total Amount : </span>
+              <span>{total + DELIVERY_CHARGES + (total * TAX) / 100}</span>
+            </div>
           </div>
-          <div className="row">
-            <span>Tax : </span>
-            <span>{(total * TAX) / 100}</span>
-          </div>
-          <div className="row">
-            <span>Delivery Charges : </span>
-            <span>{DELIVERY_CHARGES}</span>
-          </div>
-          <div className="row">
-            <span>Total Amount : </span>
-            <span>{total + DELIVERY_CHARGES + (total * TAX) / 100}</span>
+          <div className="block-2">
+            <button onClick={orderNow}>Order Now</button>
           </div>
         </div>
-        <div className="block-2">
-          <button>Order Now</button>
-        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
-  );
+    );
+  }
+  return null;
 };
-
 export default Page;

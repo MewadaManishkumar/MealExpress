@@ -49,7 +49,7 @@ const RestaurantHeader = () => {
         <Image
           preview={false}
           width={120}
-          src="https://i.ibb.co/FJLb1jv/Meal-Express.png"
+          src="https://i.ibb.co/mFL7R3Q/Meal-Express.png"
           alt="Logo"
         />
       </div>

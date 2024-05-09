@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useEffect, useState } from "react";
 import { Spin } from "antd"; // Import Spin component from antd
@@ -8,7 +8,7 @@ import Footer from "@/app/_components/Footer";
 
 const Page = (props) => {
   const name = props.params.name;
-  const [loading, setLoading] = useState(true); // State to track loading state
+  const [loading, setLoading] = useState(true);
   const [restaurantDetails, setRestaurantDetails] = useState();
   const [foodItems, setFoodItems] = useState([]);
   const [cartData, setCartData] = useState();
@@ -34,12 +34,9 @@ const Page = (props) => {
 
   const removeFromCart = (id) => {
     setRemoveCartData(id);
-    const updatedCart = cartStorage.filter((item) => item._id !== id);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-    }
-    setCartStorage(updatedCart);
-    setCartIds(updatedCart.map(cartItem => cartItem._id));
+    let localIds = cartIds?.filter((item) => item != id);
+    setCartData();
+    setCartIds(localIds);
   };
 
   const loadRestaurantDetails = async () => {
@@ -70,7 +67,7 @@ const Page = (props) => {
           <Spin /> // Show loading spinner if data is still loading
         ) : foodItems && foodItems.length > 0 ? ( // Check if foodItems is not null or undefined
           foodItems.map((item) => (
-            <div className="list-item">
+            <div key={item._id} className="list-item">
               <div>
                 <img style={{ width: 100 }} src={item.image_path} />
               </div>

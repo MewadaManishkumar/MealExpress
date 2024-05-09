@@ -282,6 +282,7 @@
 }
 .total-wrapper .block-1 {
   width: 70%;
+  margin-top: 10px;
 }
 .total-wrapper .block-2 {
   width: 30%;
@@ -293,6 +294,7 @@
   color: #fff;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 20px;
 }
 
 /* Media queries for responsive design */

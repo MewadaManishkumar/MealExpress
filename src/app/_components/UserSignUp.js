@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { baseUrl } from "../Utils";
 
-const UserSignUp = () => {
+const UserSignUp = (props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,7 +48,11 @@ const UserSignUp = () => {
         const { result } = response;
         delete result.password;
         localStorage.setItem("user", JSON.stringify(result));
-        router.push("/");
+        if (props?.redirect?.order) {
+          router.push("/order");
+        } else {
+          router.push("/");
+        }
       } else {
         message.error("Signup failed!!");
       }
