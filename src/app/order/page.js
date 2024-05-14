@@ -34,8 +34,17 @@ const Page = () => {
     let city = JSON.parse(localStorage?.getItem("user")).city;
     let cart = JSON.parse(localStorage?.getItem("cart"));
     let foodItemIds = cart.map((item) => item._id).toString();
+    let deliveryBoyResponse = await fetch(`${baseUrl}api/deliverypartners/${city}`);
+        deliveryBoyResponse = await deliveryBoyResponse.json();
+        let deliveryBoyIds = deliveryBoyResponse.result.map((item) => item._id);
+
+        let deliveryBoy_id = deliveryBoyIds[Math.floor(Math.random() * deliveryBoyIds.length)]
+        if (!deliveryBoy_id) {
+            message.info("Delivery partner not available ")
+            return false;
+        }
+
     let resto_id = cart[0].resto_id;
-    let deliveryBoy_id = "660c111eeef6df533018c1fd";
     let collection = {
       user_id,
       resto_id,
@@ -45,7 +54,7 @@ const Page = () => {
       amount: total + DELIVERY_CHARGES + (total * TAX) / 100,
     };
 
-    let response = await fetch(`http://localhost:3000/api/order`, {
+    let response = await fetch(`${baseUrl}api/order`, {
       method: "POST",
       body: JSON.stringify(collection),
     });

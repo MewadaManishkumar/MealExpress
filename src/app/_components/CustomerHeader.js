@@ -8,6 +8,7 @@ import {
   LogoutOutlined,
   LoginOutlined,
   ProfileOutlined,
+  CarOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -154,6 +155,19 @@ const CustomerHeader = (props) => {
               </Button>
             ),
             style: { width: "100px" },
+          },
+          {
+            key: "deliverypartner",
+            icon: <CarOutlined />,
+            label: (
+              <Link
+                href="/deliverypartner"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Delivery Partner
+              </Link>
+            ),
+            style: { width: "140px" },
           },
           user && {
             key: "profile",

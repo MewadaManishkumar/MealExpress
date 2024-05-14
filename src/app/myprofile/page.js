@@ -4,6 +4,7 @@ import { Spin } from "antd";
 
 import CustomerHeader from "../_components/CustomerHeader";
 import Footer from "../_components/Footer";
+import { baseUrl } from "../Utils";
 
 const Page = () => {
   const [myOrders, setMyOrders] = useState([]);
@@ -17,7 +18,7 @@ const Page = () => {
     setIsLoading(true);
     const userStorage = JSON.parse(localStorage?.getItem("user"));
     let response = await fetch(
-      `http://localhost:3000/api/order?id=${userStorage._id}`
+      `${baseUrl}api/order?id=${userStorage._id}`
     );
     response = await response.json();
     if (response.success) {
