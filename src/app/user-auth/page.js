@@ -8,7 +8,7 @@ import Footer from "../_components/Footer"
 
 const UserAuth=(props)=>{
     const [login,setLogin]=useState(true)
-
+    console.log("Props in user-auth",props);
     return(
         <div>
             <CustomerHeader />

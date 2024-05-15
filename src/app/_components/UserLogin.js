@@ -1,6 +1,6 @@
 import { Input, Button, message } from "antd";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { baseUrl } from "../Utils";
 
 const UserLogin = (props) => {
@@ -8,6 +8,12 @@ const UserLogin = (props) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const router = useRouter();
+  
+  useEffect(() => {
+    // Log the query parameters and props for debugging
+    console.log("Router Query:", router.query);
+    console.log("Props in Userlogin page:", props);
+  }, [router.query, props]);
 
   const loginHandle = async () => {
     if (!email || !password) {
